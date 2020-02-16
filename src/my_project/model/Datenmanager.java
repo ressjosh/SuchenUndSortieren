@@ -32,7 +32,20 @@ public class Datenmanager {
      * @param t
      */
     public void bubbleSort(Token[] t){
-        //todo Implementieren. Hilfestellungen finden sich im Buch und im Internet.
+        Token tmp;
+        boolean sortiert = false;
+
+        while(!sortiert){
+            sortiert = true;
+            for(int i = 0; i < t.length-1; i++){
+                if(t[i].getPrimaryKey() > t[i+1].getPrimaryKey()){
+                    tmp = t[i];
+                    t[i] = t[i+1];
+                    t[i+1] = tmp;
+                    sortiert = false;
+                }
+            }
+        }
     }
 
     /**
@@ -40,7 +53,35 @@ public class Datenmanager {
      * @param t
      */
     public void selectionSort(Token[] t){
-        //todo Implementieren. Hilfestellungen finden sich im Buch und im Internet.
+        Token[] tmp = new Token[t.length];
+        int zwischenIndex = 0;
+
+        for(int i = 0; i < t.length; i++){
+            int kleinstes = findeKleinstes(t);
+            tmp[zwischenIndex] = t[kleinstes];
+            t[kleinstes] = null;
+            zwischenIndex = zwischenIndex + 1;
+        }
+
+        for(int i = 0; i < t.length; i++){
+            t[i] = tmp[i];
+        }
+    }
+
+    public int findeKleinstes(Token[] t){
+        int zwischenDing = 0;
+        boolean ersterDurchlauf = true;
+
+        for(int i = 0; i < t.length; i++){
+            if(t[i] != null) {
+                if(ersterDurchlauf){
+                    zwischenDing = i;
+                    ersterDurchlauf = false;
+                }
+                if (t[i].getPrimaryKey() < t[zwischenDing].getPrimaryKey()) zwischenDing = i;
+            }
+        }
+        return zwischenDing;
     }
 
     /**
@@ -48,7 +89,26 @@ public class Datenmanager {
      * @param t
      */
     public void insertionSort(Token[] t){
-        //todo Implementieren. Hilfestellungen finden sich im Buch und im Internet.
+        Token tmp;
+        int j;
+
+        for(int i = 0; i < t.length; i++){
+            tmp = t[i];
+            if(i >0 && tmp.getPrimaryKey() < t[i-1].getPrimaryKey()){
+                j = i;
+                t[i] = t[j-1];
+
+                while(tmp.getPrimaryKey() < t[j].getPrimaryKey() && j > 1) {
+                    j--;
+                    t[j] = t[j-1];
+                }
+
+                if(tmp.getPrimaryKey() < t[0].getPrimaryKey()){
+                    j--;
+                }
+                t[j++] = tmp;
+            }
+        }
     }
 
     /**
